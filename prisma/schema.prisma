@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+  previewFeatures = ["relationJoins"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+enum Profile {
+  SUPERUSER
+  ADMIN
+  USER
+}
+
+model User {
+  id        Int       @default(autoincrement()) @id
+  email     String    @unique
+  name      String?
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  profile   Profile   @default(USER) // Changed from relation to direct enum field
+  permissions PermissionsUser[]
+  accessLog AccessLog[]
+}
+
+model Module {
+  id        Int       @default(autoincrement()) @id
+  name      String?
+  permissionsProfile PermissionsProfile[]
+  permissionsUser    PermissionsUser[]
+}
+
+model PermissionsProfile {
+  id        Int     @default(autoincrement()) @id
+  profile   Profile // Changed from relation to direct enum field
+  moduleId  Int
+  module    Module  @relation(fields: [moduleId], references: [id])
+  
+  @@unique([profile, moduleId]) // Added unique constraint
+}
+
+model PermissionsUser {
+  id        Int     @default(autoincrement()) @id
+  userId    Int
+  moduleId  Int
+  user      User    @relation(fields: [userId], references: [id])
+  module    Module  @relation(fields: [moduleId], references: [id])
+  
+  @@unique([userId, moduleId]) // Added unique constraint if not already present
+}
+
+model Product {
+  id        Int       @default(autoincrement()) @id
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Finance {
+  id          Int     @default(autoincrement()) @id
+  type        String
+  description String
+  price       Float
+  date        DateTime
+}
+
+model AccessLog {
+  id              Int     @default(autoincrement()) @id
+  route           String
+  permissionGranted Boolean
+  userId          Int
+  user            User    @relation(fields: [userId], references: [id])
+  date            DateTime @default(now())
+}
