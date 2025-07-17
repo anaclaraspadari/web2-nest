@@ -1,12 +1,11 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
- 
- 
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Roles } from 'src/decorator/role.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -18,6 +17,7 @@ export class UsersController {
   }
 
   @Get()
+  @Roles('SUPERUSER')
   findAll() {
     return this.usersService.findAll();
   }
