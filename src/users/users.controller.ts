@@ -21,7 +21,7 @@ export class UsersController {
 
   @Get()
   @UseGuards(AuthGuard)
-  @Profiles('SUPERUSER')
+  @Profiles('SUPERUSER','ADMIN')
   @UseGuards(ProfileGuard)
   findAll() {
     return this.usersService.findAll();
@@ -29,7 +29,7 @@ export class UsersController {
 
   @Get(':id')
   @UseGuards(AuthGuard)
-  @Profiles('SUPERUSER')
+  @Profiles('SUPERUSER','ADMIN')
   @UseGuards(ProfileGuard)
   findById(@Param('id') id: string) {
     return this.usersService.findById(+id);
@@ -37,7 +37,7 @@ export class UsersController {
 
   @Patch(':id')
   @UseGuards(AuthGuard)
-  @Profiles('SUPERUSER')
+  @Profiles('SUPERUSER','ADMIN')
   @UseGuards(ProfileGuard)
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(+id, updateUserDto);
@@ -45,7 +45,7 @@ export class UsersController {
 
   @Delete(':id')
   @UseGuards(AuthGuard)
-  @Profiles('SUPERUSER')
+  @Profiles('SUPERUSER','ADMIN')
   @UseGuards(ProfileGuard)
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
