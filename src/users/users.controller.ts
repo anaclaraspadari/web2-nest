@@ -5,7 +5,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, } from '@
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Roles } from 'src/decorator/role.decorator';
+import { Profiles } from 'src/decorator/profile.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -17,7 +17,7 @@ export class UsersController {
   }
 
   @Get()
-  @Roles('SUPERUSER')
+  @Profiles('SUPERUSER')
   findAll() {
     return this.usersService.findAll();
   }
