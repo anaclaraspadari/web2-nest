@@ -6,6 +6,9 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Profiles } from 'src/decorator/profile.decorator';
+import { Public } from 'src/decorator/public.decorator';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { ProfileGuard } from 'src/auth/profile.guard';
 
 @Controller('users')
 export class UsersController {
@@ -17,22 +20,33 @@ export class UsersController {
   }
 
   @Get()
+  @UseGuards(AuthGuard)
   @Profiles('SUPERUSER')
+  @UseGuards(ProfileGuard)
   findAll() {
     return this.usersService.findAll();
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard)
+  @Profiles('SUPERUSER')
+  @UseGuards(ProfileGuard)
   findById(@Param('id') id: string) {
     return this.usersService.findById(+id);
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard)
+  @Profiles('SUPERUSER')
+  @UseGuards(ProfileGuard)
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(+id, updateUserDto);
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
+  @Profiles('SUPERUSER')
+  @UseGuards(ProfileGuard)
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
   }

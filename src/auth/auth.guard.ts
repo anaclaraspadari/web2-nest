@@ -13,6 +13,7 @@ import { IS_PUBLIC_KEY } from "src/decorator/public.decorator";
 export class AuthGuard implements CanActivate{
     constructor(private jwtService:JwtService,private reflector: Reflector){}
     async canActivate(context: ExecutionContext): Promise<boolean> {
+        console.log("Inicio do AuthGuard");
         const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
             context.getHandler(),
             context.getClass(),
@@ -23,12 +24,15 @@ export class AuthGuard implements CanActivate{
         const request=context.switchToHttp().getRequest();
         const token=this.extractTokenFromHeader(request);
         if(!token){
-            throw new UnauthorizedException()
+            console.log("Token nao encontrado.");
+            throw new UnauthorizedException();
         }
         try{
-            const payload = await this.jwtService.verifyAsync(token,{secret: jwtConstants.secret})
+            const payload = await this.jwtService.verifyAsync(token,{secret: jwtConstants.secret});
+            console.log("pegou payload");
             request['user']=payload;
         }catch{
+            console.log("Nao foi possivel atribuir ao request.");
             throw new UnauthorizedException();
         }
         return true;

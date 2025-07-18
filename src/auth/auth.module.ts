@@ -11,7 +11,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth.guard';
 
 @Module({
-  imports: [UsersModule, JwtModule.register({ global: true, secret: jwtConstants.secret, signOptions:{expiresIn: '90s'}})],
+  imports: [UsersModule, JwtModule.register({ global: true, secret: jwtConstants.secret, signOptions:{expiresIn: '600s'}})],
   controllers: [AuthController],
   providers: [AuthService,UsersService,PrismaService,{provide: APP_GUARD,useClass: AuthGuard,}],
   exports: [AuthService]
