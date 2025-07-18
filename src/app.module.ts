@@ -6,9 +6,11 @@ import { FinancesModule } from './finances/finances.module';
 import { ProductsModule } from './products/products.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { CaslModule } from './casl/casl.module';
+import { PermissionsModule } from './permissions/permissions.module';
 
 @Module({
-  imports: [UsersModule, ProductsModule, FinancesModule, AuthModule,],
+  imports: [UsersModule, ProductsModule, FinancesModule, AuthModule, CaslModule, PermissionsModule,],
   controllers: [AppController],
   providers: [AppService],
 })
