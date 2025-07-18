@@ -28,9 +28,9 @@ model User {
 }
 
 enum Module{
-  FINANCE
-  PRODUCT
-  REPORT
+  Finance
+  Product
+  Report
 }
 
 model PermissionsUser {
