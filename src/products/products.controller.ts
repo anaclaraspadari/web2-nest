@@ -1,9 +1,4 @@
 /* eslint-disable prettier/prettier */
- 
- 
-/* eslint-disable prettier/prettier */
- 
- 
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards} from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -11,6 +6,9 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ProfileGuard } from 'src/auth/profile.guard';
 import { Profiles } from 'src/decorator/profile.decorator';
+import { PermissionsGuard } from 'src/permissions/permissions.guard';
+import { Modules } from 'src/decorator/module.decorator';
+import { Module } from 'generated/prisma'
 
 @Controller('products')
 export class ProductsController {
@@ -20,6 +18,8 @@ export class ProductsController {
   @UseGuards(AuthGuard)
   @Profiles('SUPERUSER','ADMIN')
   @UseGuards(ProfileGuard)
+  @UseGuards(PermissionsGuard)
+  @Modules(Module.Product)
   create(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
   }

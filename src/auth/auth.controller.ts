@@ -13,10 +13,12 @@ export class AuthController {
     @Public()
     @Post('login')
     signIn(@Body() signInDto: Record<string, any>) {
-        return this.authService.signIn(signInDto.username, signInDto.password);
+        console.log("auth_controller username: "+signInDto.email);
+        return this.authService.signIn(signInDto.email, signInDto.password);
     }
     
     @Get('profile')
+    @Public()
     getProfile(@Request() req){
         return req.user;
     }

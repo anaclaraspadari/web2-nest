@@ -25,7 +25,7 @@ export class ProfileGuard implements CanActivate {
     
     const request = context.switchToHttp().getRequest();
     const profile = request.user;
-    console.log("O profile eh: "+profile);
+    console.log("O profile eh: "+profile.profile);
     return requiredProfiles.includes(profile.profile);
   }
 }

@@ -1,12 +1,10 @@
 /* eslint-disable prettier/prettier */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Profiles } from 'src/decorator/profile.decorator';
-import { Public } from 'src/decorator/public.decorator';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ProfileGuard } from 'src/auth/profile.guard';
 
@@ -15,14 +13,15 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   
   @Post()
+  @UseGuards(AuthGuard)
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
 
   @Get()
-  @UseGuards(AuthGuard)
-  @Profiles('SUPERUSER','ADMIN')
   @UseGuards(ProfileGuard)
+  @Profiles('SUPERUSER','ADMIN')
+  @UseGuards(AuthGuard)
   findAll() {
     return this.usersService.findAll();
   }

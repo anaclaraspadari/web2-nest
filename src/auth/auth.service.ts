@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-base-to-string */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable prettier/prettier */
-/* eslint-disable prettier/prettier */
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt'
@@ -18,11 +18,13 @@ export class AuthService {
         if(!user){
             throw new UnauthorizedException("Credenciais invalidas")
         }
+        console.log("O email eh: "+email)
         const isMatch=await bcrypt.compare(pass,user.password);
         if(!isMatch){
             throw new UnauthorizedException("Credenciais invalidas")
         }
         const payload = { sub: user.id, email: user.email, name: user.name, profile: user.profile };
+        console.log("O payload eh: "+payload)
         return {
             access_token: await this.jwtService.signAsync(payload),
         };
