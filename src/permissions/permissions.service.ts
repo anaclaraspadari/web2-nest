@@ -1,31 +1,37 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+
 import { Injectable } from '@nestjs/common';
-import { Module } from 'generated/prisma';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class PermissionsService {
-    constructor(private prisma:PrismaService){}
-    async grantPermission(userId: number, module: Module){
-        return this.prisma.permissionsUser.create({
+    constructor(private prisma: PrismaService){}
+    grantPermission(userId: number, departmentId: number){
+        return this.prisma.permissions.create({
             data:{
                 userId,
-                module,
+                departmentId
             }
         });
     }
-    async revokePermission(userId: number, module: Module){
-        return this.prisma.permissionsUser.delete({
-            where:{
-                userId,
-                module
+    accessUserPermissions(userId: number){
+        return this.prisma.permissions.findMany({
+            where: {
+                userId
+            },
+            select:{
+                user: true,
+                department: true
             }
         })
     }
-    async listPermissions(userId: number){
-        return this.prisma.permissionsUser.findMany({
+    removeUserPermissions(userId: number){
+        return this.prisma.permissions.delete({
             where:{
-                userId
+                userId:userId
             }
         })
     }

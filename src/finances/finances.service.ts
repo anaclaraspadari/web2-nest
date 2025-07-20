@@ -37,10 +37,6 @@ export class FinancesService {
     });
   }
 
-  update(id: number, updateFinanceDto: UpdateFinanceDto) {
-    return `This action updates a #${id} finance`;
-  }
-
   remove(id: number) {
     return this.prisma.finance.delete({
       where:{

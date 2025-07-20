@@ -6,4 +6,5 @@ export class User {
     hashPassword: string;
     createdAt: Date;
     updatedAt: Date;
+    profile: string;
 }
