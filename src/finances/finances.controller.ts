@@ -32,8 +32,8 @@ export class FinancesController {
 
   @Get(':id')
   @UseGuards(AuthGuard)
-  @Profiles('SUPERUSER','ADMIN')
-  @UseGuards(ProfileGuard)
+  //@Profiles('SUPERUSER','ADMIN')
+  // @UseGuards(ProfileGuard)
   @UseGuards(DepartmentGuard)
   findOne(@Param('id') id: string) {
     return this.financesService.findOne(+id);

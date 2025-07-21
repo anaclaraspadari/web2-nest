@@ -9,7 +9,7 @@ import { Profiles } from 'src/decorator/profile.decorator';
 export class PermissionsController {
     constructor(private readonly permissionsService: PermissionsService){}
 
-    @Post()
+    @Post(':userId/:departmentId')
     @UseGuards(ProfileGuard)
     @Profiles('SUPERUSER','ADMIN')
     @UseGuards(AuthGuard)
@@ -17,7 +17,7 @@ export class PermissionsController {
         return this.permissionsService.grantPermission(+userId, +departmentId)
     }
 
-    @Get()
+    @Get(':userId')
     @UseGuards(ProfileGuard)
     @Profiles('SUPERUSER','ADMIN')
     @UseGuards(AuthGuard)
