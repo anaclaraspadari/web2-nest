@@ -15,6 +15,7 @@ enum Profile {    //Role
   USER
 }
 
+//Users
 model User {
   id        Int       @default(autoincrement()) @id
   email     String    @unique
