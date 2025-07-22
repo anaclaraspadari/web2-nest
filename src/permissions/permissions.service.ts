@@ -17,7 +17,7 @@ export class PermissionsService {
     accessUserPermissions(userId: number){
         return this.prisma.permissions.findMany({
             where: {
-                userId
+                userId:userId
             },
             select:{
                 user: true,

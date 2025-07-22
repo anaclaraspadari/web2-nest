@@ -32,8 +32,8 @@ export class ProductsController {
 
   @Get(':id')
   @UseGuards(AuthGuard)
-  @Profiles('SUPERUSER','ADMIN')
-  @UseGuards(ProfileGuard)
+  // @Profiles('SUPERUSER','ADMIN')
+  // @UseGuards(ProfileGuard)
   @UseGuards(DepartmentGuard)
   findOne(@Param('id') id: string) {
     return this.productsService.findOne(+id);
@@ -52,7 +52,6 @@ export class ProductsController {
   @UseGuards(AuthGuard)
   @Profiles('SUPERUSER','ADMIN')
   @UseGuards(ProfileGuard)
-  @UseGuards(DepartmentGuard)
   remove(@Param('id') id: string) {
     return this.productsService.remove(+id);
   }

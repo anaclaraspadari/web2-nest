@@ -4,10 +4,11 @@ import { DepartmentService } from './department.service';
 import { DepartmentController } from './department.controller';
 import { UsersService } from 'src/users/users.service';
 import { PrismaService } from 'src/prisma.service';
+import { PermissionsService } from 'src/permissions/permissions.service';
 
 @Module({
   controllers: [DepartmentController],
-  providers: [DepartmentService,UsersService,PrismaService],
+  providers: [DepartmentService,UsersService,PermissionsService,PrismaService],
   exports: [DepartmentService]
 })
 export class DepartmentModule {}
