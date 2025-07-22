@@ -4,7 +4,7 @@ import { FinancesService } from './finances.service';
 import { CreateFinanceDto } from './dto/create-finance.dto';
 import { UpdateFinanceDto } from './dto/update-finance.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { ProfileGuard } from 'src/auth/profile.guard';
+//import { ProfileGuard } from 'src/auth/profile.guard';
 import { Profiles } from 'src/decorator/profile.decorator';
 import { DepartmentGuard } from 'src/department/department.guard';
 import { Departments } from 'src/decorator/department.decorator';
@@ -16,7 +16,7 @@ export class FinancesController {
   @Post()
   @UseGuards(AuthGuard)
   @Profiles('SUPERUSER','ADMIN')
-  @UseGuards(ProfileGuard)
+  //@UseGuards(ProfileGuard)
   @UseGuards(DepartmentGuard)
   @Departments('Finance')
   create(@Body() createFinanceDto: CreateFinanceDto) {
@@ -26,8 +26,9 @@ export class FinancesController {
   @Get()
   @UseGuards(AuthGuard)
   @Profiles('SUPERUSER','ADMIN')
-  @UseGuards(ProfileGuard)
+  //@UseGuards(ProfileGuard)
   @UseGuards(DepartmentGuard)
+  @Departments('Finance')
   findAll() {
     return this.financesService.findAll();
   }
@@ -44,18 +45,20 @@ export class FinancesController {
 
   @Patch(':id')
   @UseGuards(AuthGuard)
-  // @Profiles('SUPERUSER','ADMIN')
+  @Profiles('SUPERUSER','ADMIN')
   // @UseGuards(ProfileGuard)
   @UseGuards(DepartmentGuard)
+  @Departments('Finance')
   update(@Param('id') id: string, @Body() updateFinanceDto: UpdateFinanceDto) {
     return this.financesService.update(+id, updateFinanceDto);
   }
 
   @Delete(':id')
   @UseGuards(AuthGuard)
-  // @Profiles('SUPERUSER','ADMIN')
+  @Profiles('SUPERUSER','ADMIN')
   // @UseGuards(ProfileGuard)
   @UseGuards(DepartmentGuard)
+  @Departments('Finance')
   remove(@Param('id') id: string) {
     return this.financesService.remove(+id);
   }
