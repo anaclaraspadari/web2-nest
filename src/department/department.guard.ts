@@ -63,9 +63,9 @@ export class DepartmentGuard implements CanActivate {
 
     //isso aqui foi uma tentativa de barrar caso o id que o permissions pegasse nao fosse igual ao id do user que tava tentando acessar
     //sempre barra pq o user.id ta voltando undefined
-    if(user.id!=hasUserId){
-      throw new UnauthorizedException()
-    }
+    // if(user.id!=hasUserId){
+    //   throw new UnauthorizedException()
+    // }
 
     return requiredDepartments.some((requiredDepartment) =>
       departmentNames.includes(requiredDepartment.name)
