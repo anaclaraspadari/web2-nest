@@ -3,17 +3,19 @@ import { Controller, Get, Post, Body, Param, Delete, UseGuards } from '@nestjs/c
 import { DepartmentService } from './department.service';
 import { CreateDepartmentDto } from './dto/create-department.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
-// import { ProfileGuard } from 'src/auth/profile.guard';
-// import { Profiles } from 'src/decorator/profile.decorator';
 import { DepartmentGuard } from '../guards/department.guard';
+import { Profiles } from 'src/decorator/profile.decorator';
+import { ProfileGuard } from 'src/guards/profile.guard';
 
 @Controller('department')
 export class DepartmentController {
   constructor(private readonly departmentService: DepartmentService) {}
 
+  //Módulo que cria os departamentos no banco de dados
+  //esse modulo somente administradores e superusers podem acessar
   @Post()
-  // @Profiles('SUPERUSER','ADMIN')
-  // @UseGuards(ProfileGuard)
+  @Profiles('SUPERUSER','ADMIN')
+  @UseGuards(ProfileGuard)
   @UseGuards(DepartmentGuard)
   @UseGuards(AuthGuard)
   create(@Body() createDepartmentDto: CreateDepartmentDto) {
@@ -21,8 +23,8 @@ export class DepartmentController {
   }
 
   @Get()
-  // @Profiles('SUPERUSER','ADMIN')
-  // @UseGuards(ProfileGuard)
+  @Profiles('SUPERUSER','ADMIN')
+  @UseGuards(ProfileGuard)
   @UseGuards(DepartmentGuard)
   @UseGuards(AuthGuard)
   findAll() {
@@ -30,8 +32,8 @@ export class DepartmentController {
   }
 
   @Get(':id')
-  // @Profiles('SUPERUSER','ADMIN')
-  // @UseGuards(ProfileGuard)
+  @Profiles('SUPERUSER','ADMIN')
+  @UseGuards(ProfileGuard)
   @UseGuards(DepartmentGuard)
   @UseGuards(AuthGuard)
   findOne(@Param('id') id: string) {
@@ -39,8 +41,8 @@ export class DepartmentController {
   }
 
   @Delete(':id')
-  // @Profiles('SUPERUSER','ADMIN')
-  // @UseGuards(ProfileGuard)
+  @Profiles('SUPERUSER','ADMIN')
+  @UseGuards(ProfileGuard)
   @UseGuards(DepartmentGuard)
   @UseGuards(AuthGuard)
   remove(@Param('id') id: string) {

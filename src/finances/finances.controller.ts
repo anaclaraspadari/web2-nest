@@ -13,6 +13,8 @@ import { Departments } from 'src/decorator/department.decorator';
 export class FinancesController {
   constructor(private readonly financesService: FinancesService) {}
 
+  //Módulo de gestão de finanças
+  //esse modulo pode ser acessado por todos que tiverem acesso
   @Post()
   @UseGuards(AuthGuard)
   @Profiles('SUPERUSER','ADMIN')

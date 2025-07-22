@@ -13,6 +13,8 @@ import { Departments } from 'src/decorator/department.decorator';
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
+  //Módulo de gestão de produtos
+  //esse modulo pode ser acessado por todos que tiverem acesso
   @Post()
   @UseGuards(AuthGuard)
   @Profiles('SUPERUSER','ADMIN')

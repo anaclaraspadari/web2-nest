@@ -9,6 +9,8 @@ import { Profiles } from 'src/decorator/profile.decorator';
 export class PermissionsController {
     constructor(private readonly permissionsService: PermissionsService){}
 
+    //Módulo que disponibiliza as permissões para usuários
+    //esse modulo somente administradores e superusers podem acessar
     @Post(':userId/:departmentId')
     @UseGuards(ProfileGuard)
     @Profiles('SUPERUSER','ADMIN')

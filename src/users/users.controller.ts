@@ -12,6 +12,8 @@ import { ProfileGuard } from 'src/guards/profile.guard';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   
+  //Módulo de gestão de usuários
+  //Esse modulo somente administradores e superusers podem acessar
   @Post()
   @UseGuards(ProfileGuard)
   @Profiles('SUPERUSER','ADMIN')

@@ -12,6 +12,8 @@ import { DepartmentGuard } from 'src/guards/department.guard';
 export class ReportsController {
   constructor(private readonly reportsService: ReportsService) {}
 
+  //Módulo de gestão de relatórios
+  //esse modulo pode ser acessado por todos que tiverem acesso
   @Post()
   @UseGuards(AuthGuard)
   @Profiles('SUPERUSER','ADMIN')
