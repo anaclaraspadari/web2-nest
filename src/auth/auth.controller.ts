@@ -1,0 +1,26 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request} from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { Public } from 'src/decorator/public.decorator';
+
+@Controller('auth')
+export class AuthController {
+    constructor(private authService: AuthService){}
+    @HttpCode(HttpStatus.OK)
+    @Public()
+    @Post('login')
+    signIn(@Body() signInDto: Record<string, any>) {
+        console.log("auth_controller username: "+signInDto.email);
+        return this.authService.signIn(signInDto.email, signInDto.password);
+    }
+    
+    @Get('profile')
+    @Public()
+    getProfile(@Request() req){
+        return req.user;
+    }
+
+}

@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+  previewFeatures = ["relationJoins"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+enum Profile {    //Role
+  SUPERUSER
+  ADMIN
+  USER
+}
+
+//Users
+model User {
+  id        Int       @default(autoincrement()) @id
+  email     String    @unique
+  name      String?
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  profile   Profile   @default(USER) // Changed from relation to direct enum field
+  permissions Permissions[]
+  accessLog AccessLog[]
+}
+
+//UsersPermissions
+model Permissions {
+  id        Int     @default(autoincrement()) @id
+  userId    Int
+  user      User    @relation(fields: [userId], references: [id])
+  department    Department  @relation(fields: [departmentId], references: [id])
+  departmentId  Int
+  
+  @@unique([userId]) // Added unique constraint if not already present
+}
+
+//Permissions
+model Department{
+  id          Int       @default(autoincrement()) @id
+  name        String
+  permissions Permissions[]
+}
+
+model Product {
+  id        Int       @default(autoincrement()) @id
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Finance {
+  id          Int     @default(autoincrement()) @id
+  type        String
+  description String
+  price       Float
+  date        DateTime
+}
+
+model Report {
+  id          Int     @default(autoincrement()) @id
+  description String
+  date        DateTime
+}
+
+model AccessLog {
+  id              Int     @default(autoincrement()) @id
+  route           String
+  permissionGranted Boolean
+  userId          Int
+  user            User    @relation(fields: [userId], references: [id])
+  date            DateTime @default(now())
+}
