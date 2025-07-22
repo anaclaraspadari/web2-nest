@@ -8,28 +8,22 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { PermissionsService } from "src/permissions/permissions.service";
-import { DepartmentService } from "../department/department.service";
 import { DEPARTMENTS_KEY } from "src/decorator/department.decorator";
 
 @Injectable()
 export class DepartmentGuard implements CanActivate {
   constructor(
     private reflector: Reflector,
-    private permissionsService: PermissionsService,
-    private departmentService: DepartmentService
+    private permissionsService: PermissionsService
   ) {}
 
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     console.log("Iniciando department guard")
     
-    // aqui tava retornando como undefined
     const requiredDepartments =
       this.reflector.get<string[]>(DEPARTMENTS_KEY, context.getHandler()) ??
       this.reflector.get<string[]>(DEPARTMENTS_KEY, context.getClass());
-
-    //essa linha aqui eu foi uma tentativa pro requiredDepartments nao retornar mais undefined (pra isso deu certo)
-    //const requiredDepartments=await this.departmentService.findAll()
 
     console.log("Required departments: "+requiredDepartments)
     if (!requiredDepartments) {
@@ -63,8 +57,6 @@ export class DepartmentGuard implements CanActivate {
     const departmentNames = permissions.map((permission) => permission.department);
     console.log("Department names: "+departmentNames)
 
-    //isso aqui foi uma tentativa de barrar caso o id que o permissions pegasse nao fosse igual ao id do user que tava tentando acessar
-    //sempre barra pq o user.id ta voltando undefined
     if(user.sub!=hasUserId){
       throw new UnauthorizedException()
     }
