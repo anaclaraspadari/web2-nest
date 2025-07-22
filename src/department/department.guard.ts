@@ -4,12 +4,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { PermissionsService } from "src/permissions/permissions.service";
 import { DepartmentService } from "./department.service";
 import { DEPARTMENTS_KEY } from "src/decorator/department.decorator";
-import { Department } from "generated/prisma";
 
 @Injectable()
 export class DepartmentGuard implements CanActivate {
@@ -19,13 +19,14 @@ export class DepartmentGuard implements CanActivate {
     private departmentService: DepartmentService
   ) {}
 
+
   async canActivate(context: ExecutionContext): Promise<boolean> {
     console.log("Iniciando department guard")
     
     // aqui tava retornando como undefined
     const requiredDepartments =
-      this.reflector.get<Department[]>(DEPARTMENTS_KEY, context.getHandler()) ??
-      this.reflector.get<Department[]>(DEPARTMENTS_KEY, context.getClass());
+      this.reflector.get<string[]>(DEPARTMENTS_KEY, context.getHandler()) ??
+      this.reflector.get<string[]>(DEPARTMENTS_KEY, context.getClass());
 
     //essa linha aqui eu foi uma tentativa pro requiredDepartments nao retornar mais undefined (pra isso deu certo)
     //const requiredDepartments=await this.departmentService.findAll()
@@ -37,7 +38,8 @@ export class DepartmentGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest();
     const user = request.user;
-    console.log("Dados do user: "+user)
+    console.log("Dados do user: ")
+    console.log(user)
     console.log('O profile eh: '+user.profile)
 
     if(!user){
@@ -49,26 +51,32 @@ export class DepartmentGuard implements CanActivate {
     }
 
     console.log("Id do usuario: ")
-    console.log(user.id)
+    console.log(user.sub)
 
-    const permissions = await this.permissionsService.accessUserPermissions(user.id);
-    // console.log(permissions)
+    const permissions = await this.permissionsService.accessUserPermissions(user.sub);
+    console.log(permissions)
     const hasUserId=permissions.map((permission)=>permission.user.id)
     console.log("Id que ta pegando: ")
     console.log(hasUserId)
 
 
-    const departmentNames = permissions.map((permission) => permission.department.name);
+    const departmentNames = permissions.map((permission) => permission.department);
     console.log("Department names: "+departmentNames)
 
     //isso aqui foi uma tentativa de barrar caso o id que o permissions pegasse nao fosse igual ao id do user que tava tentando acessar
     //sempre barra pq o user.id ta voltando undefined
-    // if(user.id!=hasUserId){
-    //   throw new UnauthorizedException()
-    // }
+    if(user.sub!=hasUserId){
+      throw new UnauthorizedException()
+    }
+
+    console.log("validando regra")
+    console.log(requiredDepartments[0])
+    console.log(departmentNames[0].name)
+    //console.log(requiredDepartments[0]== departmentNames[0].name)
+    
 
     return requiredDepartments.some((requiredDepartment) =>
-      departmentNames.includes(requiredDepartment.name)
+      requiredDepartments.includes(requiredDepartment)
     );
   }
 }
