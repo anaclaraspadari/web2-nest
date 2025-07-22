@@ -5,8 +5,8 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Profiles } from 'src/decorator/profile.decorator';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { ProfileGuard } from 'src/auth/profile.guard';
+import { AuthGuard } from 'src/guards/auth.guard';
+import { ProfileGuard } from 'src/guards/profile.guard';
 
 @Controller('users')
 export class UsersController {

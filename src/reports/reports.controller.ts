@@ -3,10 +3,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@n
 import { ReportsService } from './reports.service';
 import { CreateReportDto } from './dto/create-report.dto';
 import { UpdateReportDto } from './dto/update-report.dto';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from 'src/guards/auth.guard';
 import { Departments } from 'src/decorator/department.decorator';
 import { Profiles } from 'src/decorator/profile.decorator';
-import { DepartmentGuard } from 'src/department/department.guard';
+import { DepartmentGuard } from 'src/guards/department.guard';
 
 @Controller('reports')
 export class ReportsController {

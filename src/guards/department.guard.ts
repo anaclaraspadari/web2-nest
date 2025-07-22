@@ -8,7 +8,7 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { PermissionsService } from "src/permissions/permissions.service";
-import { DepartmentService } from "./department.service";
+import { DepartmentService } from "../department/department.service";
 import { DEPARTMENTS_KEY } from "src/decorator/department.decorator";
 
 @Injectable()

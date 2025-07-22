@@ -2,10 +2,10 @@
 import { Controller, Get, Post, Body, Param, Delete, UseGuards } from '@nestjs/common';
 import { DepartmentService } from './department.service';
 import { CreateDepartmentDto } from './dto/create-department.dto';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from 'src/guards/auth.guard';
 // import { ProfileGuard } from 'src/auth/profile.guard';
 // import { Profiles } from 'src/decorator/profile.decorator';
-import { DepartmentGuard } from './department.guard';
+import { DepartmentGuard } from '../guards/department.guard';
 
 @Controller('department')
 export class DepartmentController {

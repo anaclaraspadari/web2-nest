@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { PermissionsService } from './permissions.service';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { ProfileGuard } from 'src/auth/profile.guard';
+import { AuthGuard } from 'src/guards/auth.guard';
+import { ProfileGuard } from 'src/guards/profile.guard';
 import { Profiles } from 'src/decorator/profile.decorator';
 
 @Controller('permissions')

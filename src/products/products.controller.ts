@@ -3,10 +3,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards} from '@ne
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from 'src/guards/auth.guard';
 //import { ProfileGuard } from 'src/auth/profile.guard';
 import { Profiles } from 'src/decorator/profile.decorator';
-import { DepartmentGuard } from 'src/department/department.guard';
+import { DepartmentGuard } from 'src/guards/department.guard';
 import { Departments } from 'src/decorator/department.decorator';
 
 @Controller('products')
